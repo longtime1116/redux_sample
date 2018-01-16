@@ -4,18 +4,22 @@ const todos = (state = [], action) => {
       return [
         ...state,
         {
-          id: action.id,
           text: action.text,
           completed: false
         }
       ]
-      case 'TOGGLE_TODO':
-      return state.map(todo =>
-        (todo.id === action.id) ? {...todo, completed: !todo.completed} : todo)
+    case 'TOGGLE_TODO':
+      return state.map((todo, index) =>{
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: !todo.completed
+          })
+        }
+        return todo
+      })
     default:
       return state
   }
-
 }
 
 export default todos
